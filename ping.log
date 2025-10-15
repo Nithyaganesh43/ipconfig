@@ -1,0 +1,6 @@
+{"type":"outgoing","url":"https://thewatchtower.onrender.com/servers/getall?API_KEY=admin12345","response":"ok","time":"15/10/2025, 4:22:02 pm"}
+{"type":"outgoing","url":"https://server.markethealers.com","response":"ok","time":"15/10/2025, 4:22:02 pm"}
+{"type":"outgoing","url":"https://thewatchtower.onrender.com","response":"ok","time":"15/10/2025, 4:22:02 pm"}
+{"type":"outgoing","url":"https://zenova-server.onrender.com","response":"ok","time":"15/10/2025, 4:22:03 pm"}
+{"type":"outgoing","url":"https://thewatchtower.onrender.com/servers/reportallservers?API_KEY=admin12345","response":"ok","time":"15/10/2025, 4:22:04 pm"}
+{"type":"incoming","url":"/log","response":"","time":"15/10/2025, 4:22:05 pm"}
