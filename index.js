@@ -14,13 +14,17 @@ app.post('/config', (req, res) => {
   if (!deviceName || !wifiName || !wifiPassword || !deviceIp) {
     return res.status(400).json({ error: 'All fields required' });
   }
-  devices.set(deviceName, {
-    deviceName,
-    wifiName,
-    wifiPassword,
-    deviceIp,
-    updatedAt: new Date(),
-  });
+ const updatedAt = new Date().toLocaleString('en-IN', {
+   timeZone: 'Asia/Kolkata',
+ });
+ devices.set(deviceName, {
+   deviceName,
+   wifiName,
+   wifiPassword,
+   deviceIp,
+   updatedAt, // now in IST
+ });
+
   res.json({ message: 'Device config saved' });
 });
 
