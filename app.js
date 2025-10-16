@@ -99,6 +99,8 @@ function scheduleRandomCron() {
   await fetchPingReport();
   scheduleRandomCron();
 })();
+
+
 router.get('/log', (req, res) => {
   let logs = [];
   if (fs.existsSync(LOG_FILE)) {
@@ -106,11 +108,19 @@ router.get('/log', (req, res) => {
       .readFileSync(LOG_FILE, 'utf-8')
       .split('\n')
       .filter(Boolean)
-      .map((line) => JSON.parse(line));
+      .map((line) => {
+        const log = JSON.parse(line);
+        // Convert time to Date object for sorting
+        const [datePart, timePart] = log.time.split(','); // "16/10/2025", " 6:42:02 am"
+        const [day, month, year] = datePart.split('/').map(Number);
+        const dateStr = `${year}-${month}-${day} ${timePart.trim()}`; // "2025-10-16 6:42:02 am"
+        log._parsedTime = new Date(dateStr);
+        return log;
+      });
   }
 
-  // Sort by time latest on top
-  logs.sort((a, b) => new Date(b.time) - new Date(a.time));
+  // Sort by parsed time descending
+  logs.sort((a, b) => b._parsedTime - a._parsedTime);
 
   let html = `<html><head><style>
     body { font-family: Arial, sans-serif; background: #f9f9f9; }
