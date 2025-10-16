@@ -87,7 +87,8 @@ async function fetchPingReport() {
 }
 
 function scheduleRandomCron() {
-  const minutes = Math.floor(Math.random() * (13 - 7 + 1)) + 7;
+  const minutes = Math.floor(Math.random() * (7 - 4 + 1)) + 4; // 4,5,6,7
+
   setTimeout(async () => {
     await fetchPingReport();
     scheduleRandomCron();
