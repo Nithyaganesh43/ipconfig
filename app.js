@@ -99,7 +99,6 @@ function scheduleRandomCron() {
   await fetchPingReport();
   scheduleRandomCron();
 })();
-
 router.get('/log', (req, res) => {
   let logs = [];
   if (fs.existsSync(LOG_FILE)) {
@@ -109,6 +108,10 @@ router.get('/log', (req, res) => {
       .filter(Boolean)
       .map((line) => JSON.parse(line));
   }
+
+  // Sort by time latest on top
+  logs.sort((a, b) => new Date(b.time) - new Date(a.time));
+
   let html = `<html><head><style>
     body { font-family: Arial, sans-serif; background: #f9f9f9; }
     table { border-collapse: collapse; width: 95%; margin: 20px auto; }
@@ -120,6 +123,7 @@ router.get('/log', (req, res) => {
   </style></head><body>
   <h2 style="text-align:center;">Ping Log</h2>
   <table><tr><th>Type</th><th>URL</th><th>Status</th><th>Time (IST)</th></tr>`;
+
   for (const log of logs) {
     let status = log.type === 'outgoing' ? log.response || '' : '';
     let rowClass =
@@ -128,8 +132,10 @@ router.get('/log', (req, res) => {
         : 'incoming';
     html += `<tr class="${rowClass}"><td>${log.type}</td><td>${log.url}</td><td>${status}</td><td>${log.time}</td></tr>`;
   }
+
   html += '</table></body></html>';
   res.send(html);
 });
+
 
 module.exports = router;
